@@ -1,0 +1,57 @@
+{% extends 'result.html' %}
+
+{% block content %}
+<h1>hello vignesh!!!</h1>
+
+<form action='{% url 'curd_app:submit'  %}' method="POST">
+{% csrf_token %}
+
+    enter the first_name : <input type='text' name = 'first_name'  ">
+    enter the age : <input type='text' name = 'age'  >
+
+    <input type='submit' value= 'submit'>
+
+</form>
+
+{% if question %}
+<p> the last 5 updated version </p>
+<table>
+        <tr>
+            <th> first_name </th>
+            <th> age </th>
+        </tr>
+        {% for items in question %}
+        <tr id = '{{ items.id }}'>
+            <td> <p class='name'> {{ items.first_name }} </p> </td> 
+            <td> <p class='age'> {{ items.age }} </p> </td>
+        </tr>
+    {% endfor %}
+    
+    </table>
+
+
+{% endif %}
+
+{% if error_message %} <p> {{ error_message }} </p> {% endif %}
+
+
+{% if get_items %}
+<table>
+    <tr>
+        <th> first_name </th>
+        <th> age </th>
+        <th> update_records </th>
+    </tr>
+    {% for items in get_items %}
+    <tr id = '{{ items.id }}'>
+        <td> <p class='name'> {{ items.first_name }} </p> </td> 
+        <td> <p class='age'> {{ items.age }} </p> </td>
+        <td>  <a href = '{% url 'curd_app:edit' items.id %}'> update_records </a> </td>
+        <td>  <a href = '{% url 'curd_app:delete' items.id %}'> delete_records </a> </td>
+    </tr>
+{% endfor %}
+
+</table>
+
+{% endif %}
+{% endblock %}
